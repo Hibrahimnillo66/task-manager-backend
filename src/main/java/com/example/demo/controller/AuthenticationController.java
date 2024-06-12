@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.util.JwtTokenProvider;
+import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.response.JwtAuthenticationResponse;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
