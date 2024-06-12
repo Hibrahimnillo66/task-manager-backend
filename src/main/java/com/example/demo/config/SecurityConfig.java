@@ -28,13 +28,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource()).and()
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/error", "/api/authenticate").permitAll()
+                .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/tasks/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll()
-                .and()
-                .logout().permitAll();
+                .formLogin().disable(); // Disable form login for REST API
     }
 
     @Override
