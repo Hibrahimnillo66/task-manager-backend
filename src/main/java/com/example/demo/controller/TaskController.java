@@ -1,9 +1,9 @@
-// controller/TaskController.java
 package com.example.demo.controller;
 
-import com.example.demo.repository.TaskRepository;
 import com.example.demo.model.Task;
+import com.example.demo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +23,9 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable UUID id) {
+    public ResponseEntity<Task> getTaskById(@PathVariable UUID id) {
         Optional<Task> task = taskRepository.findById(id);
-        return task.orElse(null);
+        return task.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -34,7 +34,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable UUID id, @RequestBody Task taskDetails) {
+    public ResponseEntity<Task> updateTask(@PathVariable UUID id, @RequestBody Task taskDetails) {
         Optional<Task> task = taskRepository.findById(id);
         if (task.isPresent()) {
             Task existingTask = task.get();
@@ -44,14 +44,19 @@ public class TaskController {
             existingTask.setCategory(taskDetails.getCategory());
             existingTask.setStatus(taskDetails.getStatus());
             existingTask.setDate(taskDetails.getDate());
-            return taskRepository.save(existingTask);
+            return ResponseEntity.ok(taskRepository.save(existingTask));
         } else {
-            return null;
+            return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable UUID id) {
-        taskRepository.deleteById(id);
+    public ResponseEntity<Void> deleteTask(@PathVariable UUID id) {
+        if (taskRepository.existsById(id)) {
+            taskRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

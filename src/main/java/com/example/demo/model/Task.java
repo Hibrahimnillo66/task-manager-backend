@@ -1,10 +1,10 @@
-// model/Task.java
 package com.example.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -18,7 +18,7 @@ public class Task {
     private String owner;
     private String category;
     private String status;
-    private String date;  // Keep this as a string for simplicity; use Date/LocalDate for more strict type checking
+    private LocalDate date;  // Changed to LocalDate
 
     // Getters and setters
     public UUID getId() {
@@ -69,11 +69,11 @@ public class Task {
         this.status = status;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 }
