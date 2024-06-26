@@ -17,7 +17,7 @@ import java.util.Date;
 @Service
 public class GoogleLoginService {
 
-    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    @Value("${google.clientId}")
     private String clientId;
 
     @Value("${app.jwtSecret}")
