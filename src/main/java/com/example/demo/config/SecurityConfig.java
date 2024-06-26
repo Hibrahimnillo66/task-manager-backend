@@ -44,13 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource()).and()
                 .authorizeRequests()
-                .antMatchers("/api/authenticate", "/login/oauth2/**", "/oauth2/**").permitAll()
+                .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/tasks/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
-                .oauth2Login()
-                .defaultSuccessUrl("/loginSuccess")
-                .failureUrl("/loginFailure");
+                .formLogin().disable(); // Disable form login for REST API
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
