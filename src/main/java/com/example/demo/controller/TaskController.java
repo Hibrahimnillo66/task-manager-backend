@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -22,7 +23,7 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable Long id) {
+    public Task getTaskById(@PathVariable UUID id) {
         Optional<Task> task = taskRepository.findById(id);
         return task.orElse(null);
     }
@@ -33,7 +34,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Long id, @RequestBody Task taskDetails) {
+    public Task updateTask(@PathVariable UUID id, @RequestBody Task taskDetails) {
         Optional<Task> task = taskRepository.findById(id);
         if (task.isPresent()) {
             Task existingTask = task.get();
@@ -50,7 +51,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable Long id) {
+    public void deleteTask(@PathVariable UUID id) {
         taskRepository.deleteById(id);
     }
 }
