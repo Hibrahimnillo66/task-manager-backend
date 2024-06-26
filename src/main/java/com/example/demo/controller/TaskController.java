@@ -1,3 +1,4 @@
+// controller/TaskController.java
 package com.example.demo.controller;
 
 import com.example.demo.repository.TaskRepository;
@@ -38,6 +39,10 @@ public class TaskController {
             Task existingTask = task.get();
             existingTask.setName(taskDetails.getName());
             existingTask.setDescription(taskDetails.getDescription());
+            existingTask.setOwner(taskDetails.getOwner());
+            existingTask.setCategory(taskDetails.getCategory());
+            existingTask.setStatus(taskDetails.getStatus());
+            existingTask.setDate(taskDetails.getDate());
             return taskRepository.save(existingTask);
         } else {
             return null;
