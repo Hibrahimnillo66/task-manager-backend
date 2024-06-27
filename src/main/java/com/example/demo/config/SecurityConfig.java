@@ -48,11 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/tasks/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
-                .oauth2Login().disable();  // Disable OAuth2 login
+                .formLogin().disable(); // Disable form login for REST API
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
